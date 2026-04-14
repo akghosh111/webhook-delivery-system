@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { db } from "../db";
 import { events, endpoints, deliveries } from "../db/schema";
 import { eventQueue } from "../queues/eventQueue";
+import { eq } from "drizzle-orm";
 
 type CreateEventBody = {
   type: string;
@@ -78,4 +79,36 @@ export const createEvent = async (
       message: "Internal server error"
     });
   }
+};
+
+
+export const getEvents = async (req: Request, res: Response) => {
+  const result = await db.select().from(events);
+
+  res.json(result);
+};
+
+
+export const getEventById = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  const result = await db
+    .select()
+    .from(events)
+    .where(eq(events.id, id));
+
+  const event = result[0];
+
+  if (!event) {
+    return res.status(404).json({ message: "Event not found" });
+  }
+
+  res.json(event);
+};
+
+
+export const getEndpoints = async (req: Request, res: Response) => {
+  const result = await db.select().from(endpoints);
+
+  res.json(result);
 };

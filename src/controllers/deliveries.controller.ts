@@ -35,3 +35,29 @@ export const retryDelivery = async (req: Request, res: Response) => {
     deliveryId,
   });
 };
+
+
+export const getDeliveries = async (req: Request, res: Response) => {
+  const result = await db.select().from(deliveries);
+
+  res.json(result);
+};
+
+
+export const getDeliveryById = async (req: Request, res: Response) => {
+  const id = Number(req.params.id);
+
+  const result = await db
+    .select()
+    .from(deliveries)
+    .where(eq(deliveries.id, id));
+
+  const delivery = result[0];
+
+  if (!delivery) {
+    return res.status(404).json({ message: "Delivery not found" });
+  }
+
+  res.json(delivery);
+};
+

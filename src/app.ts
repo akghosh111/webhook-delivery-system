@@ -1,7 +1,7 @@
 import express from "express";
-import { createEvent } from "./controllers/events.controller";
+import { createEvent, getEndpoints, getEventById, getEvents } from "./controllers/events.controller";
 
-import { retryDelivery } from "./controllers/deliveries.controller";
+import { getDeliveries, getDeliveryById, retryDelivery } from "./controllers/deliveries.controller";
 
 export function createApplication() {
   const app = express();
@@ -14,6 +14,16 @@ export function createApplication() {
   app.post("/events", createEvent);
 
   app.post("/deliveries/:id/retry", retryDelivery);
+
+  app.get("/events", getEvents);
+
+  app.get("/events/:id", getEventById);
+
+  app.get("/deliveries", getDeliveries);
+
+  app.get("/deliveries/:id", getDeliveryById);
+
+  app.get("/endpoints", getEndpoints);
 
   return app;
 }
