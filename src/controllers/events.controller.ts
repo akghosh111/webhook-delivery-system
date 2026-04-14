@@ -53,9 +53,17 @@ export const createEvent = async (
       if (!delivery) continue;
 
       
-      await eventQueue.add("deliver-event", {
-        deliveryId: delivery.id
-      });
+      await eventQueue.add(
+            "deliver-event",
+            { deliveryId: delivery.id },
+            {
+                attempts: 5,
+                backoff: {
+                type: "exponential",
+                delay: 5000
+                }
+            }
+        );
     }
 
     return res.status(201).json({
