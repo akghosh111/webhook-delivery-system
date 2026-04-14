@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/index",
     "build": "tsc -p .",
-    "dev": "tsc-watch --onSuccess \"node dist/index\""
+    "dev": "tsc-watch --onSuccess \"node dist/server\"",
+    "studio": "drizzle-kit studio"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,7 @@
     "tsx": "^4.21.0"
   },
   "dependencies": {
+    "axios": "^1.15.0",
     "bullmq": "^5.73.5",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",

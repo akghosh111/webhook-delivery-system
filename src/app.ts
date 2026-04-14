@@ -1,4 +1,5 @@
 import express from "express";
+import { createEvent } from "./controllers/events.controller";
 
 
 
@@ -17,7 +18,7 @@ export function createApplication() {
         return res.json({message: "Welcome to ChaiCode Auth Service"})
     })
 
-    
+    app.post("/events", createEvent)
 
 
     return app;
